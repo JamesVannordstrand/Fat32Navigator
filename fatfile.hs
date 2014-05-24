@@ -9,6 +9,7 @@ import Data.Binary.Put
 import Data.List
 import Data.Word
 import GHC.Int
+import Network.CGI.Protocol
 import Numeric
 import System.Environment
 import System.IO
@@ -69,10 +70,13 @@ mainLoop fs = do
           | head command == "ls"    = ls fs (unwords $ tail command)
           | head command == "read"  = parseRead command
           | head command == "quit"  = return () 
-          | otherwise                 = wrongInput fs
-        parseRead command = if length command >= 4 
-                              then reed fs (command !! 1) (read (command !! 2)) (read (command !! 3)) 
-                              else messageLoop "ERROR : Not enough arguments. " fs
+          | otherwise               = wrongInput fs
+        parseRead command 
+          | length command >= 4 = reed fs (command !! 1) (mRead $ command !! 2) (mRead $ command !! 3) 
+          | otherwise = messageLoop "ERROR : Not enough arguments. " fs
+        mRead s = case maybeRead s of
+          Just n  -> n
+          Nothing -> 0
 
 --Funtions that Mainloop can evaluate into         
 info :: FileState -> IO ()
@@ -82,7 +86,7 @@ info fs = do
   putStrLn $ "Reserved Sector Count : 0x" ++ showHex rsvdSecCnt "" ++ ", " ++ show rsvdSecCnt
   putStrLn $ "Number of FATS        : 0x" ++ showHex numFATS "" ++ ", " ++ show numFATS
   putStrLn $ "FATSz32               : 0x" ++ showHex fATSz32 "" ++ ", " ++ show fATSz32 ++ "\n\n"
-  mainLoop fs 
+  mainLoop fs
 
 open :: FileState -> String -> IO ()
 open fs file
