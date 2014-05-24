@@ -296,6 +296,3 @@ getLocalDirs (_, _, localDirs, _) = localDirs
 
 getLocalFiles :: FileState -> LocalFiles
 getLocalFiles (_, _, _, localFiles) = localFiles
-
-
-randomfun = undefined
