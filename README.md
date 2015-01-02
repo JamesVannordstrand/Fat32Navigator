@@ -4,8 +4,8 @@ No need to compile with this command
 
 ------------------------------------------
 ##Files
-- fatfile.hs
-- fat32.img 
+ - fatfile.hs
+ - fat32.img 
 ------------------------------------------
 
 ##Challenges
