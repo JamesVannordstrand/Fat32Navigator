@@ -4,7 +4,7 @@ No need to compile with this command
 
 ------------------------------------------
 ##Files
-- fatfile.hs 
+- fatfile.hs
 - fat32.img 
 ------------------------------------------
 
